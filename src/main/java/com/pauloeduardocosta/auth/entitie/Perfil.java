@@ -1,6 +1,9 @@
 package com.pauloeduardocosta.auth.entitie;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.Entity;
@@ -15,6 +18,9 @@ import java.util.List;
 
 @Data
 @ToString
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "perfis")
 public class Perfil {

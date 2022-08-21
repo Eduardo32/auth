@@ -10,5 +10,5 @@ public interface ITokenService {
 
     Long getIdUsuario(String token);
 
-    Long getUUIDUsuario(String token);
+    String getUUIDUsuario(String token);
 }

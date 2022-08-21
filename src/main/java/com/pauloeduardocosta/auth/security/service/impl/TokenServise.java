@@ -31,11 +31,11 @@ public class TokenServise implements ITokenService {
         Date hoje = new Date();
         Date exp = new Date(hoje.getTime() + expiration);
         StringBuilder subject = new StringBuilder()
-                .append(usuario.getId() + ";")
+                .append(usuario.getId() + " ")
                 .append(usuario.getUuid());
 
         return Jwts.builder()
-                .setIssuer("API")
+                .setIssuer("API - Auth")
                 .setSubject(subject.toString())
                 .setIssuedAt(hoje)
                 .setExpiration(exp)
@@ -58,13 +58,13 @@ public class TokenServise implements ITokenService {
     @Override
     public Long getIdUsuario(String token) {
         Claims body = getBody(token);
-        return Long.parseLong(body.getSubject().split("|")[0]);
+        return Long.parseLong(body.getSubject().split(" ")[0]);
     }
 
     @Override
-    public Long getUUIDUsuario(String token) {
+    public String getUUIDUsuario(String token) {
         Claims body = getBody(token);
-        return Long.parseLong(body.getSubject().split("|")[1]);
+        return body.getSubject().split(" ")[1];
     }
 
     private Claims getBody(String token) {

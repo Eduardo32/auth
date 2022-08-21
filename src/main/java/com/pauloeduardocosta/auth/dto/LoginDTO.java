@@ -1,10 +1,14 @@
 package com.pauloeduardocosta.auth.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 
 @Getter
+@NoArgsConstructor
+@AllArgsConstructor
 @ToString
 public class LoginDTO {
 
