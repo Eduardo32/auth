@@ -2,9 +2,9 @@ package com.pauloeduardocosta.auth.service.impl;
 
 import com.pauloeduardocosta.auth.dto.LoginDTO;
 import com.pauloeduardocosta.auth.dto.TokenDTO;
-import com.pauloeduardocosta.auth.entitie.Funcionalidade;
-import com.pauloeduardocosta.auth.entitie.Perfil;
-import com.pauloeduardocosta.auth.entitie.Usuario;
+import com.pauloeduardocosta.auth.entity.Funcionalidade;
+import com.pauloeduardocosta.auth.entity.Perfil;
+import com.pauloeduardocosta.auth.entity.Usuario;
 import com.pauloeduardocosta.auth.enums.ETipoToken;
 import com.pauloeduardocosta.auth.security.service.impl.TokenServise;
 import org.junit.jupiter.api.BeforeEach;

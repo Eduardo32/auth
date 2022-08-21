@@ -1,4 +1,4 @@
-package com.pauloeduardocosta.auth.entitie;
+package com.pauloeduardocosta.auth.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

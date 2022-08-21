@@ -1,6 +1,6 @@
 package com.pauloeduardocosta.auth.security.filter;
 
-import com.pauloeduardocosta.auth.entitie.Usuario;
+import com.pauloeduardocosta.auth.entity.Usuario;
 import com.pauloeduardocosta.auth.repository.IUsuarioRepository;
 import com.pauloeduardocosta.auth.security.service.ITokenService;
 import org.springframework.beans.factory.annotation.Autowired;
