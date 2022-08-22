@@ -18,7 +18,7 @@ VALUES('ADMIN', CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP()),
     ('ATUALIZAR_USUARIO', CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP()),
     ('EXCLUIR_USUARIO', CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP());
 
-INSERT INTO perfis_funcionalidades(perfil_id, funcionalidades_id)
+INSERT INTO perfil_funcionalidade(perfil_id, funcionalidade_id)
 VALUES(1, 1),
     (2, 2),
     (2, 6),
@@ -37,7 +37,7 @@ VALUES('admin', '$2a$10$..BbYZDEPCujwGSDt.DUOOKFvj6WPJL23X4rHOUuO1Rsdr./oUjiC', 
     ('usuario02', '$2a$10$..BbYZDEPCujwGSDt.DUOOKFvj6WPJL23X4rHOUuO1Rsdr./oUjiC', 'fb85ddff-c4a0-42f6-b240-e4920ccbc230', CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP()),
     ('eu', '$2a$10$..BbYZDEPCujwGSDt.DUOOKFvj6WPJL23X4rHOUuO1Rsdr./oUjiC', 'd42923c3-7567-4898-a902-e6099a8bda8e', CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP());
 
-INSERT INTO usuarios_perfis(usuario_id, perfis_id)
+INSERT INTO usuario_perfil(usuario_id, perfil_id)
 VALUES(1, 1),
     (2, 2),
     (3, 2),

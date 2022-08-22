@@ -32,8 +32,8 @@ public class UsuarioRS {
 
     @GetMapping
     @PreAuthorize("hasRole('LISTAR_USUARIO') OR hasRole('ADMIN')")
-    public Page<UsuarioDTO> listarUsurarios(@RequestParam(required = false) String login,
-                                            @PageableDefault(sort = "login", direction = Sort.Direction.ASC) Pageable paginacao) {
+    public Page<UsuarioDTO> listarUsuarios(@RequestParam(required = false) String login,
+                                           @PageableDefault(sort = "login", direction = Sort.Direction.ASC) Pageable paginacao) {
         if(login == null) {
             return usuarioService.buscarTodos(paginacao);
         }

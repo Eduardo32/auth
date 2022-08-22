@@ -14,6 +14,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
@@ -52,6 +54,10 @@ public class Usuario implements UserDetails {
     private LocalDateTime dataAtualizacao;
 
     @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "usuario_perfil",
+            joinColumns = @JoinColumn(name = "usuario_id"),
+            inverseJoinColumns = @JoinColumn(name = "perfil_id")
+    )
     private List<Perfil> perfis = new ArrayList<>();
 
     @PreUpdate

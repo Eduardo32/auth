@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,6 +14,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
@@ -42,7 +46,16 @@ public class Perfil {
     @Column(name = "data_atualizacao", nullable = false)
     private LocalDateTime dataAtualizacao;
 
+    @ToString.Exclude
+    @ManyToMany(mappedBy = "perfis", fetch = FetchType.LAZY)
+    private List<Usuario> usuarios = new ArrayList<>();
+
+    @Fetch(FetchMode.SELECT)
     @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "perfil_funcionalidade",
+            joinColumns = @JoinColumn(name = "perfil_id"),
+            inverseJoinColumns = @JoinColumn(name = "funcionalidade_id")
+    )
     private List<Funcionalidade> funcionalidades = new ArrayList<>();
 
     @PreUpdate
@@ -56,5 +69,4 @@ public class Perfil {
         dataCriacao = atual;
         dataAtualizacao = atual;
     }
-
 }
