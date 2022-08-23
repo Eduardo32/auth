@@ -4,6 +4,13 @@ import com.pauloeduardocosta.auth.dto.NovoUsuarioDTO;
 import com.pauloeduardocosta.auth.dto.UsuarioCompletoDTO;
 import com.pauloeduardocosta.auth.dto.UsuarioDTO;
 import com.pauloeduardocosta.auth.service.IUsuarioService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -23,6 +30,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
 
+@Api(value = "Usuario", description = "Serviço de Usuarios", basePath = "v1")
 @RestController
 @RequestMapping("/v1/usuario")
 public class UsuarioRS {
@@ -40,12 +48,23 @@ public class UsuarioRS {
         return usuarioService.buscarPorLogin(login, paginacao);
     }
 
+    @ApiOperation(value = "Endpoint de busca por ID", notes = "Endpoint para busca de usuarios por ID")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK"),
+            @ApiResponse(code = 403, message = "Acesso negado")
+    })
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "Authorization", value = "Token de autorizacao - Parametro obrigatorio",
+                    required = true, dataType = "string", paramType = "header")
+    })
     @GetMapping("/{id}")
     @PreAuthorize("hasRole('LISTAR_USUARIO') OR hasRole('ADMIN')")
-    public ResponseEntity<UsuarioCompletoDTO> listarUsurarios(@PathVariable Long id) {
+    public ResponseEntity<UsuarioCompletoDTO> listarUsurarios(@ApiParam(value = "Id do usuario de deseja buscar",
+            example = "1", required = true) @PathVariable Long id) {
         UsuarioCompletoDTO usuarioCompletoDTO = usuarioService.buscarPorId(id);
         return ResponseEntity.ok(usuarioCompletoDTO);
     }
+
 
     @PostMapping
     @PreAuthorize("hasRole('CRIAR_USUARIO') OR hasRole('ADMIN')")
