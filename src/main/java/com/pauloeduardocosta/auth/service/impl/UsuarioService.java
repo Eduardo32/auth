@@ -86,9 +86,4 @@ public class UsuarioService implements IUsuarioService {
             throw new LoginJaExistenteException("O login " + login + " Já esta em uso.");
         }
     }
-
-    private Usuario buscarUsuarioLogado() {
-        Optional<Usuario> usuarioLogado = (Optional<Usuario>) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return usuarioLogado.get();
-    }
 }
