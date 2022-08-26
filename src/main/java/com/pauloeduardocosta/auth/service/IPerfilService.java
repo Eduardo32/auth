@@ -6,5 +6,11 @@ import java.util.List;
 
 public interface IPerfilService {
 
-    List<Perfil> montarListaPerfis(List<Long> perfilIds);
+    /**
+     * Busca perfis dado uma lista de IDs
+     *
+     * @param perfis IDs dos perfis que dejas buscar
+     * @return Lista de perfis encontrados
+     */
+    List<Perfil> buscarPerfis(List<Long> perfis);
 }

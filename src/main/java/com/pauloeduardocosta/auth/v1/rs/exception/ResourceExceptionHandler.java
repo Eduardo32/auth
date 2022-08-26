@@ -31,7 +31,7 @@ public class ResourceExceptionHandler {
     }
 
     @ExceptionHandler(BadCredentialsException.class)
-    public ResponseEntity<StandardError> CredenciaisIncoretas(BadCredentialsException e, HttpServletRequest request) {
+    public ResponseEntity<StandardError> CredenciaisIncorretas(BadCredentialsException e, HttpServletRequest request) {
         StandardError err = new StandardError(HttpStatus.FORBIDDEN.value(), e.getMessage(), System.currentTimeMillis());
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(err);
     }

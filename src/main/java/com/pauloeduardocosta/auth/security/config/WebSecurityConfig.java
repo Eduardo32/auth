@@ -20,7 +20,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private static final String[] WHITELIST = {
+    private static final String[] PUBLIC = {
             "/**.html",
             "/v2/api-docs",
             "/webjars/**",
@@ -55,6 +55,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers(WHITELIST);
+        web.ignoring().antMatchers(PUBLIC);
     }
 }

@@ -5,9 +5,10 @@ Projeto de estudo utilizando:
 
 * Spring Boot
 * Banco de dados H2 para ambiente de desenvolvimento
+* Banco de dados PostgreSQL para ambiente de prod
+* Flaway para versionamento de base
 * Jacoco para cobertura de testes
 * Swagger para documentação da API
-* Flaway para versionamento de base
 
 ## Em que consiste o projeto 
 
@@ -38,7 +39,7 @@ E os perfis:
 * Administrador (que tera permissão para executar todas as ações na API)
 * Usuario (sem nenhuma permissão)
 
-E um usuario padrão com login e senha **admin**
+E um usuario padrão com login e senha **admin** e perfil **Administrador**
 
 *Obs:* Essas configurações iniciais podem ser modificados no arquivo **data.sql** em *./src/main/resources* (arquivo de inicialização do banco H2, ambiente de desenvolvimento) ou no arquivo **V2__dados.sql** em *./src/main/resources/db/migration/postgreSQL* (arquivo de inicialização do banco de produção)
 
@@ -61,7 +62,7 @@ cd auth
 Subir projeto
 
 ```
-./mvnw spring-boot:run -Pdev
+./mvnw clean install && ./mvnw spring-boot:run -Pdev
 ```
 
 Com a aplicação rodando é possivel acessar a [documentação do swagger](http://localhost:8080/swagger-ui.html)

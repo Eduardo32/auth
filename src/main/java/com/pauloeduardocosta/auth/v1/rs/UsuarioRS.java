@@ -54,7 +54,7 @@ public class UsuarioRS {
             @ApiResponse(code = 403, message = "Acesso negado")
     })
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "Authorization", value = "Token de autorizacao - Parametro obrigatorio",
+            @ApiImplicitParam(name = "Authorization", value = "Token de autorizacao",
                     required = true, dataType = "string", paramType = "header")
     })
     @GetMapping("/{id}")

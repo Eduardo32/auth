@@ -28,13 +28,21 @@ public class SwaggerConfig {
     }
 
     private ApiInfo apiInfo() {
-        return new ApiInfo("Auth API",
+        return new ApiInfo("Auth-API",
                 "MS de autenticação",
-                "1.0",
-                "Terms of service",
-                new Contact("Paulo Eduardo Costa", "github.com/Eduardo32", "contato@pauloeduardocosta.com"),
-                "License of API",
-                "API license URL",
+                "1.0.0",
+                "",
+                apiContact(),
+                "Licença da API",
+                "https://github.com/Eduardo32/auth/blob/master/LICENSE",
                 Collections.emptyList());
+    }
+
+    private Contact apiContact() {
+        return new Contact(
+                "Paulo Eduardo Costa",
+                "https://www.github.com/Eduardo32",
+                "contato@pauloeduardocosta.com"
+        );
     }
 }
