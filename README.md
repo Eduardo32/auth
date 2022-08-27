@@ -1,5 +1,5 @@
-# Auth
-MS para autenticação de usuarios
+# Auth-API
+MS para gerenciamento e autenticação de usuarios
 
 Projeto de estudo utilizando:
 
@@ -45,7 +45,7 @@ E um usuario padrão com login e senha **admin** e perfil **Administrador**
 
 ## Instalação
 
-### Dev
+### Profile Dev
 
 Clonar o projeto
 
@@ -67,6 +67,35 @@ Subir projeto
 
 Com a aplicação rodando é possivel acessar a [documentação do swagger](http://localhost:8080/swagger-ui.html)
 
-### Prod
+### Profile Prod
 
+#### Variaveis de Ambiente
 
+* AUTH_DATABASE_URL= URL de conexão com banco de dados (com uma tabela auth criada)
+* AUTH_DATABASE_USER= Usuario da banco de dados
+* AUTH_DATABASE_PASSWORD= Senha do banco de dados 
+* AUTH_SECRET= Secrec para assinatura do token
+
+Clonar o projeto
+
+```
+git clone https://github.com/Eduardo32/auth.git
+```
+
+Entrar na pasta do projeto
+
+```
+cd auth
+```
+
+Subir projeto
+
+```
+./mvnw clean install && ./mvnw spring-boot:run -Pprod
+```
+
+### Profile Prod com Docker
+
+```
+docker run --name <NOME_CONTAINER> -p 8080:8080 -e AUTH_DATABASE_URL=URL -e AUTH_DATABASE_USER=USER -e AUTH_DATABASE_PASSWORD=PASSWORD -e AUTH_SECRET=SECRET -d pauloeduardocosta/auth-api:0.0.1
+```

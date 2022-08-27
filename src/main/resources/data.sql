@@ -32,7 +32,7 @@ INSERT INTO verificacao_email(uuid, data_criacao, data_verificacao, verificado) 
 */
 
 INSERT INTO usuarios(login, senha, uuid, data_criacao, data_atualizacao)
-VALUES('admin', '$2a$10$..BbYZDEPCujwGSDt.DUOOKFvj6WPJL23X4rHOUuO1Rsdr./oUjiC', '1c7916ca-2afa-4fbd-a15d-94a3fe3ac050', CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP()),
+VALUES('admin', '$2a$10$WDrDVuiwbFUXeLeoW/ExqOZ5IAsL80EYzgB4Xjpfv7H9A45zmyH/S', '1c7916ca-2afa-4fbd-a15d-94a3fe3ac050', CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP()),
     ('usuario01', '$2a$10$..BbYZDEPCujwGSDt.DUOOKFvj6WPJL23X4rHOUuO1Rsdr./oUjiC', '2cb8b0b2-4876-42ed-85f6-4adfcc5191f9', CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP()),
     ('usuario02', '$2a$10$..BbYZDEPCujwGSDt.DUOOKFvj6WPJL23X4rHOUuO1Rsdr./oUjiC', 'fb85ddff-c4a0-42f6-b240-e4920ccbc230', CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP()),
     ('eu', '$2a$10$..BbYZDEPCujwGSDt.DUOOKFvj6WPJL23X4rHOUuO1Rsdr./oUjiC', 'd42923c3-7567-4898-a902-e6099a8bda8e', CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP());

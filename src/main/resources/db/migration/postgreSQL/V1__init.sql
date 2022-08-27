@@ -1,25 +1,32 @@
+
 CREATE TABLE public.funcionalidades (
 	id bigserial NOT NULL,
+	data_atualizacao timestamp NOT NULL,
+	data_criacao timestamp NOT NULL,
 	nome varchar(255) NOT NULL,
-	CONSTRAINT funcionalidades_pkey PRIMARY KEY (id)
+	CONSTRAINT funcionalidades_pkey PRIMARY KEY (id),
+	CONSTRAINT uk_3m1ascfbv7dx8qrvfs2pmjiyq UNIQUE (nome)
 );
 
 CREATE TABLE public.perfis (
 	id bigserial NOT NULL,
-	nome varchar(255) NULL,
-	CONSTRAINT perfis_pkey PRIMARY KEY (id)
+	data_atualizacao timestamp NOT NULL,
+	data_criacao timestamp NOT NULL,
+	nome varchar(255) NOT NULL,
+	CONSTRAINT perfis_pkey PRIMARY KEY (id),
+	CONSTRAINT uk_10p6gqv0q50bo17oxgx9p29il UNIQUE (nome)
 );
 
-CREATE TABLE public.perfis_funcionalidades (
+CREATE TABLE public.perfil_funcionalidade (
 	perfil_id int8 NOT NULL,
-	funcionalidades_id int8 NOT NULL
+	funcionalidade_id int8 NOT NULL
 );
 
 
--- public.perfis_funcionalidades foreign keys
+-- public.perfil_funcionalidade foreign keys
 
-ALTER TABLE public.perfis_funcionalidades ADD CONSTRAINT fk7n7p0f5aylaaw8eud8wlv9f0l FOREIGN KEY (funcionalidades_id) REFERENCES public.funcionalidades(id);
-ALTER TABLE public.perfis_funcionalidades ADD CONSTRAINT fkj1el1x40rt65ww1t09t6t0dgh FOREIGN KEY (perfil_id) REFERENCES public.perfis(id);
+ALTER TABLE public.perfil_funcionalidade ADD CONSTRAINT fk1ydfadgleyih7iod943c5gaxd FOREIGN KEY (perfil_id) REFERENCES public.perfis(id);
+ALTER TABLE public.perfil_funcionalidade ADD CONSTRAINT fkqar22e15uyp6qc9phrxk4go51 FOREIGN KEY (funcionalidade_id) REFERENCES public.funcionalidades(id);
 
 CREATE TABLE public.usuarios (
 	id bigserial NOT NULL,
@@ -32,13 +39,13 @@ CREATE TABLE public.usuarios (
 	CONSTRAINT usuarios_pkey PRIMARY KEY (id)
 );
 
-CREATE TABLE public.usuarios_perfis (
+CREATE TABLE public.usuario_perfil (
 	usuario_id int8 NOT NULL,
-	perfis_id int8 NOT NULL
+	perfil_id int8 NOT NULL
 );
 
 
--- public.usuarios_perfis foreign keys
+-- public.usuario_perfil foreign keys
 
-ALTER TABLE public.usuarios_perfis ADD CONSTRAINT fkcvq90lk95py1n889uimu18atx FOREIGN KEY (perfis_id) REFERENCES public.perfis(id);
-ALTER TABLE public.usuarios_perfis ADD CONSTRAINT fkotpfkn8c9nmhqqy4pb8hkgp18 FOREIGN KEY (usuario_id) REFERENCES public.usuarios(id);
+ALTER TABLE public.usuario_perfil ADD CONSTRAINT fk46v67aocrgergt30mf76suhgm FOREIGN KEY (usuario_id) REFERENCES public.usuarios(id);
+ALTER TABLE public.usuario_perfil ADD CONSTRAINT fkfc3bg1xm20dbaj4tevlsy289f FOREIGN KEY (perfil_id) REFERENCES public.perfis(id);
