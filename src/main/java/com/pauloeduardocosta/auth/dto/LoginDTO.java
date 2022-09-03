@@ -13,6 +13,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 public class LoginDTO {
 
     private String login;
+
+    @ToString.Exclude
     private String senha;
 
     public UsernamePasswordAuthenticationToken converter() {

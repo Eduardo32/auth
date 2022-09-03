@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
+import springfox.documentation.annotations.ApiIgnore;
 
 import java.net.URI;
 
@@ -38,9 +39,25 @@ public class UsuarioRS {
     @Autowired
     private IUsuarioService usuarioService;
 
+    @ApiOperation(value = "Endpoint de listagem de usuários", notes = "Endpoint para listagem de todos os usuários cadastrados")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK"),
+            @ApiResponse(code = 403, message = "Acesso negado")
+    })
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "Authorization", value = "Token de autorizacao",
+                    required = true, dataType = "string", paramType = "header"),
+            @ApiImplicitParam(name = "page", dataType = "integer", paramType = "query",
+                    value = "Pagina de resultados que deseja recuperar (0..N)"),
+            @ApiImplicitParam(name = "size", dataType = "integer", paramType = "query",
+                    value = "Numero de resultados por página"),
+            @ApiImplicitParam(name = "sort", allowMultiple = true, dataType = "string", paramType = "query",
+                    value = "Criterios de ordenação dos resultados: propriedade(,asc|desc)")
+    })
     @GetMapping
     @PreAuthorize("hasRole('LISTAR_USUARIO') OR hasRole('ADMIN')")
-    public Page<UsuarioDTO> listarUsuarios(@RequestParam(required = false) String login,
+    public Page<UsuarioDTO> listarUsuarios(@ApiParam(value = "Id do usuario de deseja buscar", example = "admin") @RequestParam(required = false) String login,
+                                           @ApiIgnore("Ignorados pq o swagger ui mostra os parametros errados.")
                                            @PageableDefault(sort = "login", direction = Sort.Direction.ASC) Pageable paginacao) {
         if(login == null) {
             return usuarioService.buscarTodos(paginacao);
@@ -65,7 +82,15 @@ public class UsuarioRS {
         return ResponseEntity.ok(usuarioCompletoDTO);
     }
 
-
+    @ApiOperation(value = "Endpoint de criação de usuário", notes = "Endpoint para criação de um novo usuário")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Created"),
+            @ApiResponse(code = 403, message = "Acesso negado")
+    })
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "Authorization", value = "Token de autorizacao",
+                    required = true, dataType = "string", paramType = "header")
+    })
     @PostMapping
     @PreAuthorize("hasRole('CRIAR_USUARIO') OR hasRole('ADMIN')")
     public ResponseEntity<UsuarioCompletoDTO> criarUsuario(@Validated @RequestBody NovoUsuarioDTO novoUsuarioDTO,

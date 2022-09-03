@@ -44,6 +44,7 @@ public class Usuario implements UserDetails {
     @Column(nullable = false, unique = true)
     private String login;
 
+    @ToString.Exclude
     @Column(nullable = false)
     private String senha;
 
