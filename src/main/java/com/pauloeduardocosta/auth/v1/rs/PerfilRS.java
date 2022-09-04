@@ -1,8 +1,10 @@
 package com.pauloeduardocosta.auth.v1.rs;
 
-import com.pauloeduardocosta.auth.dto.FuncionalidadeDTO;
-import com.pauloeduardocosta.auth.dto.NovaFuncionalidadeDTO;
-import com.pauloeduardocosta.auth.service.IFuncionalidadeService;
+import com.pauloeduardocosta.auth.dto.AtualizarPerfilDTO;
+import com.pauloeduardocosta.auth.dto.NovoPerfilDTO;
+import com.pauloeduardocosta.auth.dto.PerfilCompletoDTO;
+import com.pauloeduardocosta.auth.dto.PerfilDTO;
+import com.pauloeduardocosta.auth.service.IPerfilService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -32,16 +34,16 @@ import springfox.documentation.annotations.ApiIgnore;
 
 import java.net.URI;
 
-@Api(value = "Funcionalidade", description = "Serviço de Funcionalidades", basePath = "v1")
+@Api(value = "Perfil", description = "Serviço de Perfis", basePath = "v1")
 @RestController
-@RequestMapping("/v1/funcionalidade")
-public class FuncionalidadeRS {
-
+@RequestMapping("/v1/perfil")
+public class PerfilRS {
+    
     @Autowired
-    private IFuncionalidadeService funcionalidadeService;
+    private IPerfilService perfilService;
 
-    @ApiOperation(value = "Endpoint de listagem de funcionalidades",
-            notes = "Endpoint para listagem de todos as funcionalidades cadastrados")
+    @ApiOperation(value = "Endpoint de listagem de perfis",
+            notes = "Endpoint para listagem de todos as perfis cadastrados")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK"),
             @ApiResponse(code = 403, message = "Acesso negado")
@@ -57,19 +59,19 @@ public class FuncionalidadeRS {
                     value = "Criterios de ordenação dos resultados: propriedade(,asc|desc)")
     })
     @GetMapping
-    @PreAuthorize("hasRole('LISTAR_FUNCIONALIDADE') OR hasRole('ADMIN')")
-    public Page<FuncionalidadeDTO> buscarFuncionalidade(@ApiParam(value = "Funcionalidade que deseja buscar", example = "admin")
-                                                            @RequestParam(required = false) String funcionalidade,
-                                                        @ApiIgnore("Ignorados pq o swagger ui mostra os parametros errados.")
-                                                            @PageableDefault(sort = "nome", direction = Sort.Direction.ASC) Pageable paginacao) {
-        if(funcionalidade == null) {
-            return funcionalidadeService.buscarTodos(paginacao);
+    @PreAuthorize("hasRole('LISTAR_PERFIL') OR hasRole('ADMIN')")
+    public Page<PerfilDTO> buscarPerfis(@ApiParam(value = "Funcionalidade que deseja buscar", example = "admin")
+                                                    @RequestParam(required = false) String perfil,
+                                        @ApiIgnore("Ignorados pq o swagger ui mostra os parametros errados.")
+                                                    @PageableDefault(sort = "nome", direction = Sort.Direction.ASC) Pageable paginacao) {
+        if(perfil == null) {
+            return perfilService.buscarTodos(paginacao);
         }
-        return funcionalidadeService.buscarPorNome(funcionalidade, paginacao);
+        return perfilService.buscarPorNome(perfil, paginacao);
     }
 
-    @ApiOperation(value = "Endpoint de busca de funcionalidade por ID",
-            notes = "Endpoint para buscar funcionalidade por um ID")
+    @ApiOperation(value = "Endpoint de busca de perfil por ID",
+            notes = "Endpoint para buscar um perfil por ID")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK"),
             @ApiResponse(code = 403, message = "Acesso negado"),
@@ -80,18 +82,18 @@ public class FuncionalidadeRS {
                     required = true, dataType = "string", paramType = "header")
     })
     @GetMapping("/{id}")
-    @PreAuthorize("hasRole('LISTAR_FUNCIONALIDADE') OR hasRole('ADMIN')")
-    public ResponseEntity<FuncionalidadeDTO> buscarFuncionalidadeId(@ApiParam(value = "Id da funcionalidade de deseja buscar",
+    @PreAuthorize("hasRole('LISTAR_PERFIL') OR hasRole('ADMIN')")
+    public ResponseEntity<PerfilCompletoDTO> buscarPerfilId(@ApiParam(value = "Id do perfil que deseja buscar",
             example = "1", required = true) @PathVariable Long id) {
-        FuncionalidadeDTO funcionalidadeDTO = funcionalidadeService.buscarPorId(id);
-        return ResponseEntity.ok(funcionalidadeDTO);
+        PerfilCompletoDTO perfilCompletoDTO = perfilService.buscarPorId(id);
+        return ResponseEntity.ok(perfilCompletoDTO);
     }
 
-    @ApiOperation(value = "Endpoint de criação de funcionalidade",
-            notes = "Endpoint para criação de uma nova funcionalidade")
+    @ApiOperation(value = "Endpoint de criação de perfil",
+            notes = "Endpoint para criação de uma nova perfil")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Criado"),
-            @ApiResponse(code = 400, message = "Funcionalidade Ja existente"),
+            @ApiResponse(code = 400, message = "Perfil Ja existente"),
             @ApiResponse(code = 403, message = "Acesso negado")
     })
     @ApiImplicitParams({
@@ -99,16 +101,16 @@ public class FuncionalidadeRS {
                     required = true, dataType = "string", paramType = "header")
     })
     @PostMapping
-    @PreAuthorize("hasRole('CRIAR_FUNCIONALIDADE') OR hasRole('ADMIN')")
-    public ResponseEntity<FuncionalidadeDTO> criarFuncionalidade(@Validated @RequestBody NovaFuncionalidadeDTO novaFuncionalidadeDTO,
+    @PreAuthorize("hasRole('CRIAR_PERFIL') OR hasRole('ADMIN')")
+    public ResponseEntity<PerfilCompletoDTO> criarPerfil(@Validated @RequestBody NovoPerfilDTO novoPerfilDTO,
                                                                  UriComponentsBuilder uriBuilder) {
-        FuncionalidadeDTO funcionalidadeDTO = funcionalidadeService.criarFuncionalidade(novaFuncionalidadeDTO);
-        URI uri = uriBuilder.path("/v1/funcionalidade/{id}").buildAndExpand(funcionalidadeDTO.getId()).toUri();
-        return ResponseEntity.created(uri).body(funcionalidadeDTO);
+        PerfilCompletoDTO perfilCompletoDTO = perfilService.criarPerfil(novoPerfilDTO);
+        URI uri = uriBuilder.path("/v1/perfil/{id}").buildAndExpand(perfilCompletoDTO.getId()).toUri();
+        return ResponseEntity.created(uri).body(perfilCompletoDTO);
     }
 
-    @ApiOperation(value = "Endpoint de atualização de funcionalidade",
-            notes = "Endpoint para atualização de uma funcionalidade")
+    @ApiOperation(value = "Endpoint de atualização de perfil",
+            notes = "Endpoint para atualização de um perfil")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK"),
             @ApiResponse(code = 403, message = "Acesso negado"),
@@ -119,16 +121,16 @@ public class FuncionalidadeRS {
                     required = true, dataType = "string", paramType = "header")
     })
     @PutMapping("/{id}")
-    @PreAuthorize("hasRole('ATUALIZAR_FUNCIONALIDADE') OR hasRole('ADMIN')")
-    public ResponseEntity<FuncionalidadeDTO> atualizarFuncionalidade(@ApiParam(value = "Id da funcionalidade que deseja atualizar", example = "1", required = true)
-                                                                         @PathVariable Long id,
-                                                                     @Validated @RequestBody NovaFuncionalidadeDTO novaFuncionalidadeDTO) {
-        FuncionalidadeDTO funcionalidadeDTO = funcionalidadeService.atualizarFuncionalidade(id, novaFuncionalidadeDTO);
-        return ResponseEntity.ok(funcionalidadeDTO);
+    @PreAuthorize("hasRole('ATUALIZAR_PERFIL') OR hasRole('ADMIN')")
+    public ResponseEntity<PerfilCompletoDTO> atualizarPerfil(@ApiParam(value = "Id do perfil que deseja atualizar", example = "1", required = true)
+                                                                 @PathVariable Long id,
+                                                             @Validated @RequestBody AtualizarPerfilDTO atualizarPerfilDTO) {
+        PerfilCompletoDTO perfilCompletoDTO = perfilService.atualizarPerfil(id, atualizarPerfilDTO);
+        return ResponseEntity.ok(perfilCompletoDTO);
     }
 
-    @ApiOperation(value = "Endpoint de exclusão de funcionalidade",
-            notes = "Endpoint para exclusão de uma funcionalidade")
+    @ApiOperation(value = "Endpoint de exclusão do perfil",
+            notes = "Endpoint para exclusão de um perfil")
     @ApiResponses(value = {
             @ApiResponse(code = 204, message = "Sem Conteudo"),
             @ApiResponse(code = 403, message = "Acesso negado"),
@@ -139,10 +141,10 @@ public class FuncionalidadeRS {
                     required = true, dataType = "string", paramType = "header")
     })
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasRole('EXCLUIR_FUNCIONALIDADE') OR hasRole('ADMIN')")
-    public ResponseEntity excluirFuncionalidade(@ApiParam(value = "Id da funcionalidade que deseja excluir", example = "1", required = true)
-                                                    @PathVariable Long id) {
-        funcionalidadeService.excluirFuncionalidade(id);
+    @PreAuthorize("hasRole('EXCLUIR_PERFIL') OR hasRole('ADMIN')")
+    public ResponseEntity excluirPerfil(@ApiParam(value = "Id do perfil que deseja excluir", example = "1", required = true)
+                                                @PathVariable Long id) {
+        perfilService.excluirPerfil(id);
         return ResponseEntity.noContent().build();
     }
 }

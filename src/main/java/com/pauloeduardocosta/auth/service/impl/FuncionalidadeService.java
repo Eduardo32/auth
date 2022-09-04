@@ -5,6 +5,7 @@ import com.pauloeduardocosta.auth.dto.NovaFuncionalidadeDTO;
 import com.pauloeduardocosta.auth.entity.Funcionalidade;
 import com.pauloeduardocosta.auth.repository.IFuncionalidadeRepository;
 import com.pauloeduardocosta.auth.service.IFuncionalidadeService;
+import com.pauloeduardocosta.auth.service.exception.FuncionalidadeJaExistenteException;
 import com.pauloeduardocosta.auth.service.exception.LoginJaExistenteException;
 import com.pauloeduardocosta.auth.service.exception.ObjetoNaoEncotradoException;
 import org.slf4j.Logger;
@@ -15,6 +16,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -38,7 +40,7 @@ public class FuncionalidadeService implements IFuncionalidadeService {
 
     @Override
     public Page<FuncionalidadeDTO> buscarTodos(Pageable paginacao) {
-        LOGGER.info("Buscando todas as funcionalidade");
+        LOGGER.info("Buscando todas as funcionalidades");
         Page<Funcionalidade> funcionalidades = funcionalidadeRepository.findAll(paginacao);
         return FuncionalidadeDTO.montarDTO(funcionalidades);
     }
@@ -65,7 +67,7 @@ public class FuncionalidadeService implements IFuncionalidadeService {
     @Override
     @Transactional
     public FuncionalidadeDTO atualizarFuncionalidade(Long id, NovaFuncionalidadeDTO novaFuncionalidadeDTO) {
-        LOGGER.info("Tentando atualizar a funcionalidade comid {}", id);
+        LOGGER.info("Tentando atualizar a funcionalidade com id {}", id);
         Optional<Funcionalidade> funcionalidade = funcionalidadeRepository.findById(id);
         if(funcionalidade.isEmpty()) {
             LOGGER.error("Funcionalidade com id {} não encontrada", id);
@@ -78,7 +80,7 @@ public class FuncionalidadeService implements IFuncionalidadeService {
     @Override
     @Transactional
     public void excluirFuncionalidade(Long id) {
-        LOGGER.info("Tentando excluir a funcionalidade comid {}", id);
+        LOGGER.info("Tentando excluir a funcionalidade com id {}", id);
         Optional<Funcionalidade> funcionalidade = funcionalidadeRepository.findById(id);
         if(funcionalidade.isEmpty()) {
             LOGGER.error("Funcionalidade com id {} não encontrada", id);
@@ -87,12 +89,18 @@ public class FuncionalidadeService implements IFuncionalidadeService {
         funcionalidadeRepository.delete(funcionalidade.get());
     }
 
+    @Override
+    public List<Funcionalidade> buscarFuncionalidades(List<Long> funcionalidades) {
+        LOGGER.info("Buscando lista de funcionalidades {}", funcionalidades);
+        return funcionalidadeRepository.findAllById(funcionalidades);
+    }
+
     private void verificandoFuncionalidade(String nome) {
         LOGGER.info("Verificando se a funcionalidade já existe {}", nome);
         Optional<Funcionalidade> funcionalidade = funcionalidadeRepository.findByNome(nome);
         if(funcionalidade.isPresent()) {
             LOGGER.error("A funcionalidade {} já existe", nome);
-            throw new LoginJaExistenteException("A funcionalidade " + nome + " Já existe.");
+            throw new FuncionalidadeJaExistenteException("A funcionalidade " + nome + " Já existe.");
         }
     }
 }

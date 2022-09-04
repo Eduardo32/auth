@@ -4,7 +4,7 @@ import com.pauloeduardocosta.auth.dto.FuncionalidadeDTO;
 import com.pauloeduardocosta.auth.dto.NovaFuncionalidadeDTO;
 import com.pauloeduardocosta.auth.entity.Funcionalidade;
 import com.pauloeduardocosta.auth.repository.IFuncionalidadeRepository;
-import com.pauloeduardocosta.auth.service.exception.LoginJaExistenteException;
+import com.pauloeduardocosta.auth.service.exception.FuncionalidadeJaExistenteException;
 import com.pauloeduardocosta.auth.service.exception.ObjetoNaoEncotradoException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @ExtendWith(MockitoExtension.class)
 @ActiveProfiles("test")
@@ -78,7 +79,7 @@ class FuncionalidadeServiceTest {
                 .build();
         Mockito.when(funcionalidadeRepository.findByNome(novaFuncionalidadeDTO.getNome()))
                 .thenReturn(mockFuncionalidade(novaFuncionalidadeDTO.getNome()));
-        Assertions.assertThrows(LoginJaExistenteException.class,
+        Assertions.assertThrows(FuncionalidadeJaExistenteException.class,
                 () -> funcionalidadeService.criarFuncionalidade(novaFuncionalidadeDTO));
         Mockito.verify(funcionalidadeRepository, Mockito.times(0)).save(Mockito.any(Funcionalidade.class));
     }
@@ -176,6 +177,17 @@ class FuncionalidadeServiceTest {
         Long id = 2L;
         Mockito.when(funcionalidadeRepository.findById(id)).thenReturn(Optional.empty());
         Assertions.assertThrows(ObjetoNaoEncotradoException.class, () -> funcionalidadeService.excluirFuncionalidade(id));
+    }
+
+    @Test
+    @DisplayName("Dado que estou buscando funcionalidades por uma lista de ids ")
+    void buscarFuncionalidadesTest() {
+        List<Long> ids = List.of(1L, 2L, 3L);
+        Mockito.when(funcionalidadeRepository.findAllById(ids))
+                .thenReturn(funcionalidades);
+        List<Funcionalidade> funcionalidadesEncontradas = funcionalidadeService.buscarFuncionalidades(ids);
+        Assertions.assertNotNull(funcionalidadesEncontradas);
+        Assertions.assertEquals(funcionalidades.size(), funcionalidadesEncontradas.size());
     }
 
     private Optional<Funcionalidade> mockFuncionalidade(String nome) {

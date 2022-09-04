@@ -2,8 +2,11 @@ package com.pauloeduardocosta.auth.service;
 
 import com.pauloeduardocosta.auth.dto.NovaFuncionalidadeDTO;
 import com.pauloeduardocosta.auth.dto.FuncionalidadeDTO;
+import com.pauloeduardocosta.auth.entity.Funcionalidade;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+
+import java.util.List;
 
 public interface IFuncionalidadeService {
 
@@ -55,4 +58,12 @@ public interface IFuncionalidadeService {
      * @param id ID da funcionalidade que deseja excluir
      */
     void excluirFuncionalidade(Long id);
+
+    /**
+     * Busca funcionalidades dado uma lista de IDs
+     *
+     * @param funcionalidades IDs das funcionalidades que dejas buscar
+     * @return Lista de funcionalidades encontrados
+     */
+    List<Funcionalidade> buscarFuncionalidades(List<Long> funcionalidades);
 }
