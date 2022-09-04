@@ -6,4 +6,4 @@ ARG PORT_BUILD=8080
 EXPOSE $PORT_BUILD
 ARG JAR_FILE=./target/*.jar
 COPY $JAR_FILE ./auth-api.jar
-ENTRYPOINT ["java", "-jar", "./app.jar"]
+ENTRYPOINT ["java", "-jar", "./auth-api.jar"]

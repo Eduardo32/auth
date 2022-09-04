@@ -97,5 +97,5 @@ Subir projeto
 ### Profile Prod com Docker
 
 ```
-docker run --name <NOME_CONTAINER> -p 8080:8080 -e AUTH_DATABASE_URL=URL -e AUTH_DATABASE_USER=USER -e AUTH_DATABASE_PASSWORD=PASSWORD -e AUTH_SECRET=SECRET -d pauloeduardocosta/auth-api:0.0.1
+docker run --name <NOME_CONTAINER> -p 8080:8080 -e AUTH_DATABASE_URL=URL -e AUTH_DATABASE_USER=USER -e AUTH_DATABASE_PASSWORD=PASSWORD -e AUTH_SECRET=SECRET -d pauloeduardocosta/auth-api:1.0.0
 ```
