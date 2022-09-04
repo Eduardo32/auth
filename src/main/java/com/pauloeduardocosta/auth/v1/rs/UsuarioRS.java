@@ -56,7 +56,7 @@ public class UsuarioRS {
     })
     @GetMapping
     @PreAuthorize("hasRole('LISTAR_USUARIO') OR hasRole('ADMIN')")
-    public Page<UsuarioDTO> listarUsuarios(@ApiParam(value = "Id do usuario de deseja buscar", example = "admin") @RequestParam(required = false) String login,
+    public Page<UsuarioDTO> listarUsuarios(@ApiParam(value = "Login que deseja buscar", example = "admin") @RequestParam(required = false) String login,
                                            @ApiIgnore("Ignorados pq o swagger ui mostra os parametros errados.")
                                            @PageableDefault(sort = "login", direction = Sort.Direction.ASC) Pageable paginacao) {
         if(login == null) {
