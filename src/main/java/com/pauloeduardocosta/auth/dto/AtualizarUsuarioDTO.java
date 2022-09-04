@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -14,8 +13,10 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class AtualizarPerfilDTO {
+public class AtualizarUsuarioDTO {
 
-    private String nome;
-    private List<Long> funcionalidades;
+    private String login;
+    private String senhaAtual;
+    private String novaSenha;
+    private List<Long> perfis;
 }

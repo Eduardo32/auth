@@ -1,5 +1,6 @@
 package com.pauloeduardocosta.auth.service;
 
+import com.pauloeduardocosta.auth.dto.AtualizarUsuarioDTO;
 import com.pauloeduardocosta.auth.dto.NovoUsuarioDTO;
 import com.pauloeduardocosta.auth.dto.UsuarioCompletoDTO;
 import com.pauloeduardocosta.auth.dto.UsuarioDTO;
@@ -40,4 +41,20 @@ public interface IUsuarioService {
      * @return Dados do usuario
      */
     UsuarioCompletoDTO buscarPorId(Long id);
+
+    /**
+     * Atualizar um usuario
+     *
+     * @param id ID do usuario que deseja alterar
+     * @param atualizarUsuarioDTO DTO com as novas informações do usuario
+     * @return DTO com o usuario atualizada
+     */
+    UsuarioCompletoDTO atualizarUsuario(Long id, AtualizarUsuarioDTO atualizarUsuarioDTO);
+
+    /**
+     * Excluir um usuario
+     *
+     * @param id ID do usuario que deseja excluir
+     */
+    void excluirPerfil(Long id);
 }

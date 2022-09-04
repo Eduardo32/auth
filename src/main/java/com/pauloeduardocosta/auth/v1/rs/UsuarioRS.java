@@ -1,5 +1,6 @@
 package com.pauloeduardocosta.auth.v1.rs;
 
+import com.pauloeduardocosta.auth.dto.AtualizarUsuarioDTO;
 import com.pauloeduardocosta.auth.dto.NovoUsuarioDTO;
 import com.pauloeduardocosta.auth.dto.UsuarioCompletoDTO;
 import com.pauloeduardocosta.auth.dto.UsuarioDTO;
@@ -19,9 +20,11 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -76,7 +79,7 @@ public class UsuarioRS {
     })
     @GetMapping("/{id}")
     @PreAuthorize("hasRole('LISTAR_USUARIO') OR hasRole('ADMIN')")
-    public ResponseEntity<UsuarioCompletoDTO> listarUsurarios(@ApiParam(value = "Id do usuario de deseja buscar",
+    public ResponseEntity<UsuarioCompletoDTO> listarUsuariosPorID(@ApiParam(value = "Id do usuario de deseja buscar",
             example = "1", required = true) @PathVariable Long id) {
         UsuarioCompletoDTO usuarioCompletoDTO = usuarioService.buscarPorId(id);
         return ResponseEntity.ok(usuarioCompletoDTO);
@@ -98,5 +101,43 @@ public class UsuarioRS {
         UsuarioCompletoDTO usuarioCompletoDTO = usuarioService.criarUsuario(novoUsuarioDTO);
         URI uri = uriBuilder.path("/v1/usuario/{id}").buildAndExpand(usuarioCompletoDTO.getId()).toUri();
         return ResponseEntity.created(uri).body(usuarioCompletoDTO);
+    }
+
+    @ApiOperation(value = "Endpoint de atualização de usuarios",
+            notes = "Endpoint para atualização de um usuario")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK"),
+            @ApiResponse(code = 403, message = "Acesso negado"),
+            @ApiResponse(code = 403, message = "Não encontrado")
+    })
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "Authorization", value = "Token de autorizacao",
+                    required = true, dataType = "string", paramType = "header")
+    })
+    @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ATUALIZAR_USUARIO') OR hasRole('ADMIN')")
+    public ResponseEntity<UsuarioCompletoDTO> atualizarUsuario(@RequestBody AtualizarUsuarioDTO atualizarUsuarioDTO,
+                                                               @PathVariable Long id) {
+        UsuarioCompletoDTO usuarioCompletoDTO = usuarioService.atualizarUsuario(id, atualizarUsuarioDTO);
+        return ResponseEntity.ok(usuarioCompletoDTO);
+    }
+
+    @ApiOperation(value = "Endpoint de exclusão do uusuario",
+            notes = "Endpoint para exclusão de um uusuario")
+    @ApiResponses(value = {
+            @ApiResponse(code = 204, message = "Sem Conteudo"),
+            @ApiResponse(code = 403, message = "Acesso negado"),
+            @ApiResponse(code = 403, message = "Não encontrado")
+    })
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "Authorization", value = "Token de autorizacao",
+                    required = true, dataType = "string", paramType = "header")
+    })
+    @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('EXCLUIR_USUARIO') OR hasRole('ADMIN')")
+    public ResponseEntity excluirUsuario(@ApiParam(value = "Id do Usuario que deseja excluir", example = "1", required = true)
+                                            @PathVariable Long id) {
+        usuarioService.excluirPerfil(id);
+        return ResponseEntity.noContent().build();
     }
 }

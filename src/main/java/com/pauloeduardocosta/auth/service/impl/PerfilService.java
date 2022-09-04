@@ -89,13 +89,11 @@ public class PerfilService implements IPerfilService {
             LOGGER.error("Perfil com id {} não encontrado", id);
             throw new ObjetoNaoEncotradoException("Perfil com id " + id + " não encontrado.");
         }
-        List<Funcionalidade> funcionalidades = new ArrayList<>();
-        if(atualizarPerfilDTO.getFuncionalidades() != null
-                && !atualizarPerfilDTO.getFuncionalidades().isEmpty()) {
-            funcionalidades = funcionalidadeService.buscarFuncionalidades(atualizarPerfilDTO.getFuncionalidades());
+        if(atualizarPerfilDTO.getFuncionalidades() != null) {
+            List<Funcionalidade> funcionalidades = funcionalidadeService.buscarFuncionalidades(atualizarPerfilDTO.getFuncionalidades());
             validarFuncionalidade(atualizarPerfilDTO.getFuncionalidades(), funcionalidades);
+            perfil.get().setFuncionalidades(funcionalidades);
         }
-        perfil.get().setFuncionalidades(funcionalidades);
         if(atualizarPerfilDTO.getNome() != null && !atualizarPerfilDTO.getNome().isBlank()) {
             perfil.get().setNome(atualizarPerfilDTO.getNome());
         }

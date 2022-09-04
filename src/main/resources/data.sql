@@ -19,10 +19,7 @@ VALUES('ADMIN', CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP()),
     ('EXCLUIR_USUARIO', CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP());
 
 INSERT INTO perfil_funcionalidade(perfil_id, funcionalidade_id)
-VALUES(1, 1),
-    (2, 2),
-    (2, 6),
-    (2, 10);
+VALUES(1, 1);
 
 /*
 INSERT INTO verificacao_email(uuid, data_criacao, data_verificacao, verificado) VALUES('1d33c32f-9e6e-4d4b-8b0d-2d52ac623b9c', '2019-05-05 18:00:00', '2019-05-05 18:00:00', TRUE);

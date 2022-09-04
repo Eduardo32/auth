@@ -20,12 +20,12 @@ public class NovoUsuarioDTO {
 
     @NotBlank
     @Length(min = 5)
-    public String login;
+    private String login;
 
     @NotBlank
     @Length(min = 5)
-    public String senha;
+    private String senha;
 
     @NotNull
-    public List<Long> perfis;
+    private List<Long> perfis;
 }

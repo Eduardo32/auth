@@ -1,6 +1,7 @@
 package com.pauloeduardocosta.auth.v1.rs.exception;
 
 import com.pauloeduardocosta.auth.dto.CampoInvalidoDTO;
+import com.pauloeduardocosta.auth.service.exception.AtualizacaoDeSenhaException;
 import com.pauloeduardocosta.auth.service.exception.FuncionalidadeJaExistenteException;
 import com.pauloeduardocosta.auth.service.exception.LoginJaExistenteException;
 import com.pauloeduardocosta.auth.service.exception.ObjetoNaoEncotradoException;
@@ -73,6 +74,12 @@ public class ResourceExceptionHandler {
 
     @ExceptionHandler(PerfilJaExistenteException.class)
     public ResponseEntity<StandardError> perfilJaExistente(PerfilJaExistenteException e, HttpServletRequest request) {
+        StandardError err = new StandardError(HttpStatus.BAD_REQUEST.value(), e.getMessage(), System.currentTimeMillis());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
+    }
+
+    @ExceptionHandler(AtualizacaoDeSenhaException.class)
+    public ResponseEntity<StandardError> atualizacaoDeSenha(AtualizacaoDeSenhaException e, HttpServletRequest request) {
         StandardError err = new StandardError(HttpStatus.BAD_REQUEST.value(), e.getMessage(), System.currentTimeMillis());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
     }

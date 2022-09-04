@@ -1,5 +1,6 @@
 package com.pauloeduardocosta.auth.service.impl;
 
+import com.pauloeduardocosta.auth.dto.AtualizarUsuarioDTO;
 import com.pauloeduardocosta.auth.dto.NovoUsuarioDTO;
 import com.pauloeduardocosta.auth.dto.UsuarioCompletoDTO;
 import com.pauloeduardocosta.auth.dto.UsuarioDTO;
@@ -7,6 +8,7 @@ import com.pauloeduardocosta.auth.entity.Funcionalidade;
 import com.pauloeduardocosta.auth.entity.Perfil;
 import com.pauloeduardocosta.auth.entity.Usuario;
 import com.pauloeduardocosta.auth.repository.IUsuarioRepository;
+import com.pauloeduardocosta.auth.service.exception.AtualizacaoDeSenhaException;
 import com.pauloeduardocosta.auth.service.exception.LoginJaExistenteException;
 import com.pauloeduardocosta.auth.service.exception.ObjetoNaoEncotradoException;
 import org.junit.jupiter.api.Assertions;
@@ -134,6 +136,88 @@ class UsuarioServiceTest {
         Long id = 1L;
         Mockito.when(usuarioRepository.findById(id)).thenReturn(Optional.empty());
         Assertions.assertThrows(ObjetoNaoEncotradoException.class ,() -> usuarioService.buscarPorId(id));
+    }
+
+    @Test
+    @DisplayName("Dado que estou atualizando um usuario")
+    void atualizarUsuarioTeste() {
+        Long id = 1L;
+        AtualizarUsuarioDTO atualizarUsuarioDTO = AtualizarUsuarioDTO.builder()
+                .login("novoLogin")
+                .senhaAtual("123456")
+                .novaSenha("nova123456")
+                .perfis(List.of(1L))
+                .build();
+        Mockito.when(usuarioRepository.findById(id)).thenReturn(Optional.of(mockUsuario(id)));
+        Mockito.when(usuarioRepository.findByLogin(atualizarUsuarioDTO.getLogin())).thenReturn(Optional.empty());
+        Mockito.when(perfilService.buscarPerfis(atualizarUsuarioDTO.getPerfis())).thenReturn(mockPerfis());
+        Mockito.when(passwordEncoder.matches(Mockito.anyString(), Mockito.anyString())).thenReturn(true);
+        UsuarioCompletoDTO usuarioCompletoDTO = usuarioService.atualizarUsuario(id, atualizarUsuarioDTO);
+        Assertions.assertNotNull(usuarioCompletoDTO);
+        Assertions.assertEquals(atualizarUsuarioDTO.getLogin(), usuarioCompletoDTO.getLogin());
+    }
+
+    @Test
+    @DisplayName("Dado que estou atualizando um usuario com id inexistente")
+    void atualizarUsuarioIdInexistenteTeste() {
+        Long id = 1L;
+        AtualizarUsuarioDTO atualizarUsuarioDTO = AtualizarUsuarioDTO.builder()
+                .login("novoLogin")
+                .senhaAtual("123456")
+                .novaSenha("nova123456")
+                .perfis(List.of(1L))
+                .build();
+        Mockito.when(usuarioRepository.findById(id)).thenReturn(Optional.empty());
+        Assertions.assertThrows(ObjetoNaoEncotradoException.class, () -> usuarioService.atualizarUsuario(id, atualizarUsuarioDTO));
+    }
+
+    @Test
+    @DisplayName("Dado que estou atualizando um usuario sem passa a senha atual")
+    void atualizarUsuarioSemEnviarSenhaAtualTeste() {
+        Long id = 1L;
+        AtualizarUsuarioDTO atualizarUsuarioDTO = AtualizarUsuarioDTO.builder()
+                .login("novoLogin")
+                .novaSenha("nova123456")
+                .perfis(List.of(1L))
+                .build();
+        Mockito.when(usuarioRepository.findById(id)).thenReturn(Optional.of(mockUsuario(id)));
+        Mockito.when(usuarioRepository.findByLogin(atualizarUsuarioDTO.getLogin())).thenReturn(Optional.empty());
+        Mockito.when(perfilService.buscarPerfis(atualizarUsuarioDTO.getPerfis())).thenReturn(mockPerfis());
+        Assertions.assertThrows(AtualizacaoDeSenhaException.class, () -> usuarioService.atualizarUsuario(id, atualizarUsuarioDTO));
+    }
+
+    @Test
+    @DisplayName("Dado que estou atualizando um usuario enviando uma senha que não bate")
+    void atualizarUsuarioComSenhaQueNaoBateTeste() {
+        Long id = 1L;
+        AtualizarUsuarioDTO atualizarUsuarioDTO = AtualizarUsuarioDTO.builder()
+                .login("novoLogin")
+                .senhaAtual("123456")
+                .novaSenha("nova123456")
+                .perfis(List.of(1L))
+                .build();
+        Mockito.when(usuarioRepository.findById(id)).thenReturn(Optional.of(mockUsuario(id)));
+        Mockito.when(usuarioRepository.findByLogin(atualizarUsuarioDTO.getLogin())).thenReturn(Optional.empty());
+        Mockito.when(perfilService.buscarPerfis(atualizarUsuarioDTO.getPerfis())).thenReturn(mockPerfis());
+        Mockito.when(passwordEncoder.matches(Mockito.anyString(), Mockito.anyString())).thenReturn(false);
+        Assertions.assertThrows(AtualizacaoDeSenhaException.class, () -> usuarioService.atualizarUsuario(id, atualizarUsuarioDTO));
+    }
+
+    @Test
+    @DisplayName("Dado que estou excluindo um usuario")
+    void excluirPerfilTeste() {
+        Long id = 1L;
+        Mockito.when(usuarioRepository.findById(id)).thenReturn(Optional.of(mockUsuario(id)));
+        usuarioService.excluirPerfil(id);
+        Mockito.verify(usuarioRepository, Mockito.times(1)).delete(Mockito.any(Usuario.class));
+    }
+
+    @Test
+    @DisplayName("Dado que estou excluindo um usuario com um id inexistente")
+    void excluirPerfilIdInexistenteTeste() {
+        Long id = 1L;
+        Mockito.when(usuarioRepository.findById(id)).thenReturn(Optional.empty());
+        Assertions.assertThrows(ObjetoNaoEncotradoException.class, () -> usuarioService.excluirPerfil(id));
     }
 
     private Usuario mockUsuario(Long id) {
