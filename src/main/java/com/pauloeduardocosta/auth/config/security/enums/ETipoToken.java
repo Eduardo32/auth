@@ -1,4 +1,4 @@
-package com.pauloeduardocosta.auth.enums;
+package com.pauloeduardocosta.auth.config.security.enums;
 
 public enum ETipoToken {
     BEARER(1, "Bearer");

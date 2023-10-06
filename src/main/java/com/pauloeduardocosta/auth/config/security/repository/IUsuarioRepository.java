@@ -1,6 +1,6 @@
-package com.pauloeduardocosta.auth.repository;
+package com.pauloeduardocosta.auth.config.security.repository;
 
-import com.pauloeduardocosta.auth.entity.Usuario;
+import com.pauloeduardocosta.auth.config.security.entity.Usuario;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

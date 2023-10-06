@@ -1,8 +1,6 @@
 package com.pauloeduardocosta.auth.dto;
 
-import com.pauloeduardocosta.auth.entity.Usuario;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
+import com.pauloeduardocosta.auth.config.security.entity.Usuario;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.domain.Page;

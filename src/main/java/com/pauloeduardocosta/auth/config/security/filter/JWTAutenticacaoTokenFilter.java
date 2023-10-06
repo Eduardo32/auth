@@ -1,8 +1,8 @@
-package com.pauloeduardocosta.auth.security.filter;
+package com.pauloeduardocosta.auth.config.security.filter;
 
-import com.pauloeduardocosta.auth.entity.Usuario;
-import com.pauloeduardocosta.auth.repository.IUsuarioRepository;
-import com.pauloeduardocosta.auth.security.service.ITokenService;
+import com.pauloeduardocosta.auth.config.security.entity.Usuario;
+import com.pauloeduardocosta.auth.config.security.repository.IUsuarioRepository;
+import com.pauloeduardocosta.auth.config.security.service.ITokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;

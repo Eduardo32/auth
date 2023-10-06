@@ -1,7 +1,7 @@
-package com.pauloeduardocosta.auth.security.service.impl;
+package com.pauloeduardocosta.auth.config.security.service.impl;
 
-import com.pauloeduardocosta.auth.entity.Usuario;
-import com.pauloeduardocosta.auth.repository.IUsuarioRepository;
+import com.pauloeduardocosta.auth.config.security.entity.Usuario;
+import com.pauloeduardocosta.auth.config.security.repository.IUsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

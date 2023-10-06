@@ -1,6 +1,6 @@
-package com.pauloeduardocosta.auth.security.config;
+package com.pauloeduardocosta.auth.config.security;
 
-import com.pauloeduardocosta.auth.security.filter.JWTAutenticacaoTokenFilter;
+import com.pauloeduardocosta.auth.config.security.filter.JWTAutenticacaoTokenFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;

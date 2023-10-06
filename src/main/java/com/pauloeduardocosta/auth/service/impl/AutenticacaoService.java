@@ -2,8 +2,8 @@ package com.pauloeduardocosta.auth.service.impl;
 
 import com.pauloeduardocosta.auth.dto.LoginDTO;
 import com.pauloeduardocosta.auth.dto.TokenDTO;
-import com.pauloeduardocosta.auth.enums.ETipoToken;
-import com.pauloeduardocosta.auth.security.service.ITokenService;
+import com.pauloeduardocosta.auth.config.security.enums.ETipoToken;
+import com.pauloeduardocosta.auth.config.security.service.ITokenService;
 import com.pauloeduardocosta.auth.service.IAutenticacaoService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

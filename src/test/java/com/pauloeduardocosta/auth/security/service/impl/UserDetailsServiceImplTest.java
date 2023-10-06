@@ -1,7 +1,8 @@
 package com.pauloeduardocosta.auth.security.service.impl;
 
-import com.pauloeduardocosta.auth.entity.Usuario;
-import com.pauloeduardocosta.auth.repository.IUsuarioRepository;
+import com.pauloeduardocosta.auth.config.security.service.impl.UserDetailsServiceImpl;
+import com.pauloeduardocosta.auth.config.security.entity.Usuario;
+import com.pauloeduardocosta.auth.config.security.repository.IUsuarioRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

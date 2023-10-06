@@ -1,7 +1,7 @@
-package com.pauloeduardocosta.auth.security.service.impl;
+package com.pauloeduardocosta.auth.config.security.service.impl;
 
-import com.pauloeduardocosta.auth.entity.Usuario;
-import com.pauloeduardocosta.auth.security.service.ITokenService;
+import com.pauloeduardocosta.auth.config.security.entity.Usuario;
+import com.pauloeduardocosta.auth.config.security.service.ITokenService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

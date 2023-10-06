@@ -1,4 +1,4 @@
-package com.pauloeduardocosta.auth.security.service;
+package com.pauloeduardocosta.auth.config.security.service;
 
 import org.springframework.security.core.Authentication;
 

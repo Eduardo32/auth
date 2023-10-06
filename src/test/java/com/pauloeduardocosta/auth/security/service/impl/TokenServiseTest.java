@@ -1,8 +1,9 @@
 package com.pauloeduardocosta.auth.security.service.impl;
 
+import com.pauloeduardocosta.auth.config.security.service.impl.TokenServise;
 import com.pauloeduardocosta.auth.entity.Funcionalidade;
 import com.pauloeduardocosta.auth.entity.Perfil;
-import com.pauloeduardocosta.auth.entity.Usuario;
+import com.pauloeduardocosta.auth.config.security.entity.Usuario;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

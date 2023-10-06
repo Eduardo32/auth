@@ -1,5 +1,6 @@
 package com.pauloeduardocosta.auth.entity;
 
+import com.pauloeduardocosta.auth.config.security.entity.Usuario;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
