@@ -12,6 +12,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 public class TokenServise implements ITokenService {
@@ -34,11 +36,15 @@ public class TokenServise implements ITokenService {
                 .append(usuario.getId() + " ")
                 .append(usuario.getUuid());
 
+        Map<String, Object> teste = new HashMap<>();
+        teste.put("Meu:teste", "teste123");
+
         return Jwts.builder()
                 .setIssuer("API - Auth")
                 .setSubject(subject.toString())
                 .setIssuedAt(hoje)
                 .setExpiration(exp)
+                .addClaims(teste)
                 .signWith(SignatureAlgorithm.HS256, secret)
                 .compact();
     }
